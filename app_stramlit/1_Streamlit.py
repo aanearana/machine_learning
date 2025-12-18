@@ -247,15 +247,14 @@ if submitted:
         
         # Mapeo de resultados
         # Mapeo de resultados usando la probabilidad
-        umbral = 0.4  # Puedes ajustar esto para que el modelo sea más sensible
+        umbral = 0.4  
         if prob_ansiedad > umbral:
             st.error(f"Resultado: **PRESENCIA DE ANSIEDAD**")
         else:
             st.success(f"Resultado: **AUSENCIA DE ANSIEDAD**")
 
         st.markdown("---")
-        # st.subheader("Datos Procesados (para debug)")
-        # st.dataframe(X_predict_final) # Se puede descomentar para depuración
+
         
     except Exception as e:
         st.error(f" Error al ejecutar la predicción: {e}")
