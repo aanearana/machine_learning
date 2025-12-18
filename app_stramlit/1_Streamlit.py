@@ -74,10 +74,6 @@ def load_model(path):
 
 
 def preprocess_data(raw_data: dict, feature_names_order: list):
-    """
-    Procesa (mapea y OHE) los datos de entrada al formato exacto que espera el modelo.
-    """
-    
     # 1. Crear DataFrame
     df_new_user = pd.DataFrame([raw_data]) 
 
@@ -250,14 +246,12 @@ if submitted:
         prob_ansiedad = y_proba[0]
         
         # Mapeo de resultados
-        if prediction_value > 0.5:
-            st.error("Resultado de Predicción: **PRESENCIA DE ANSIEDAD**")
-            st.metric("Probabilidad de Ansiedad", f"{prob_ansiedad*100:.2f}%")
-            st.info("Este resultado indica un alto riesgo. Por favor, consulta a un profesional de la salud mental.")
+        # Mapeo de resultados usando la probabilidad
+        umbral = 0.4  # Puedes ajustar esto para que el modelo sea más sensible
+        if prob_ansiedad > umbral:
+            st.error(f"Resultado: **PRESENCIA DE ANSIEDAD**")
         else:
-            st.success("Resultado de Predicción: **AUSENCIA DE ANSIEDAD**")
-            st.metric("Probabilidad de Ansiedad", f"{prob_ansiedad*100:.2f}%")
-            st.info("El modelo predice un bajo riesgo de ansiedad basado en los datos ingresados.")
+            st.success(f"Resultado: **AUSENCIA DE ANSIEDAD**")
 
         st.markdown("---")
         # st.subheader("Datos Procesados (para debug)")
